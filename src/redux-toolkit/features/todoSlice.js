@@ -9,9 +9,12 @@ const todoSlice = createSlice({
     name: 'todo',
     initialState,
     reducers: {
-        add: (state = initialState, action) => (
-            state.length > 0 ? [...state, action.payload] : [action.payload]
-        )
+        add: (state = initialState, action) => {
+            state.todo = state.todo.length > 0 ? [...state.todo, action.payload] : [action.payload]
+        },
+        delete: (state, action) => {
+            
+        }
     }
 })
 

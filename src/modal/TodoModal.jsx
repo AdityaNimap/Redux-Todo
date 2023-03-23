@@ -5,9 +5,9 @@ import { add } from '../redux-toolkit/features/todoSlice'
 const TodoModal = ({ open, onclose }) => {
 
   const dispatch = useDispatch()
-  let count = 1;
+
+
   const [todo, setTodo] = useState({
-    id: count,
     todo: '',
     descrip: '',
     priority: '',
@@ -15,10 +15,15 @@ const TodoModal = ({ open, onclose }) => {
 
 
   const handleAdd = () => {
-    count++
+    
+    onclose()
     dispatch(add(todo))
-    console.log(todo)
-
+    setTodo({
+      ...todo,
+      todo: '',
+      descrip: '',
+      priority: ''
+    })
   }
 
   if (!open) return null
@@ -36,19 +41,22 @@ const TodoModal = ({ open, onclose }) => {
             className='form-control'
             value={todo.todo}
             onChange={(e) => setTodo({ ...todo, todo: e.target.value })}
+            required
           ></input>
-
+          
           <lable>Description</lable>
           <input
             type='text'
             className='form-control'
             value={todo.descrip}
             onChange={(e) => setTodo({ ...todo, descrip: e.target.value })}
+            required
           ></input>
           <select
             className='form-select'
             value={todo.priority}
             onChange={(e) => setTodo({ ...todo, priority: e.target.value })}
+            required
           >
             <option value="" disabled defaultValue>Select Priority</option>
             <option value='High'>High</option>

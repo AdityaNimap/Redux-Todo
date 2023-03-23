@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import TodoModal from "../modal/TodoModal"
 
 
 const Todo = () => {
     const [openModal,setOpenModal] = useState(false)
-    const data = useSelector((state)=>state.todo)
-    console.log(data)
+    const data = useSelector((state)=>state.todo.todo)
+    const dispatch = useDispatch()
+    console.log("Store-->",data)
+
+    const handleDelete = ()=>{
+        dispatch()
+    }
+
   return (
     <div className='container'>
         <h1 className='mx-auto'>TODO LIST</h1>
-        <table className='table table-bordered'>
+        <table className='table'  style={{textAlign:'center'}}>
             <thead>
                 <tr>
                     <th>Sr. No</th>
@@ -23,14 +29,18 @@ const Todo = () => {
                 </tr>
             </thead>
             <tbody className='table-group-divider'>
-                <tr>
-                    <td>{data.id}</td>
-                    <td>{data.todo}</td>
-                    <td>{data.descrip}</td>
-                    <td>{data.priority}</td>
-                    <td>update</td>
-                    <td>delete</td>
-                </tr>
+                {
+                    data.map((item,i)=>(
+                        <tr key={i}>
+                            <td>{i+1}</td>
+                            <td>{item.todo}</td>
+                            <td>{item.descrip}</td>
+                            <td>{item.priority}</td>
+                            <td><span className='btn btn-primary'>Edit</span></td>
+                            <td><span className='btn btn-primary' onClick={handleDelete}>Delete</span></td>
+                        </tr>
+                    ))
+                }
             </tbody>
         </table>
         <button 
